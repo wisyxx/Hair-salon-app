@@ -1,0 +1,19 @@
+{
+    "name": "alvar/hair-salon-app",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "MVC\\": "./",
+            "Controllers\\": "./controllers",
+            "Model\\": "./models"
+        }
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Álvaro Hernández Colino",
+            "email": "alvarohcolino@gmail.com"
+        }
+    ],
+    "require": {}
+}
