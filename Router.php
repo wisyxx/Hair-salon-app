@@ -22,7 +22,6 @@ class Router
         
         // Protect routes
         session_start();
-
         
         $protectedRoutes = [];
 
@@ -36,7 +35,6 @@ class Router
         } else {
             $fn = $this->postRoutes[$currentUrl] ?? null;
         }
-
 
         if ( $fn ) {
             // Calls a functión when we dont now wich one
