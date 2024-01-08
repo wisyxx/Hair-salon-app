@@ -22,4 +22,14 @@ class LoginController
 
         header('Location: /');
     }
+
+    public static function register(Router $router) {
+
+        $router->render('auth/create-account', []);
+    }
+
+    public static function forgotPassword(Router $router)
+    {
+        $router->render('auth/forgot-password', []);
+    }
 }
