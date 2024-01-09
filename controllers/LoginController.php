@@ -24,7 +24,6 @@ class LoginController
     }
 
     public static function register(Router $router) {
-
         $router->render('auth/create-account', []);
     }
 
