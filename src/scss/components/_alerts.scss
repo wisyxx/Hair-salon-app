@@ -1,0 +1,13 @@
+@use '../base/variables' as v;
+
+.alert {
+    text-align: center;
+    padding: .8rem;
+    margin: 1rem 0;
+    background-color: v.$red;
+    font-weight: bolder;
+
+    &:last-of-type {
+        margin-bottom: 2rem;
+    }
+}

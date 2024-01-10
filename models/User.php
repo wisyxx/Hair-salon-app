@@ -35,4 +35,31 @@ class User extends ActiveRecord
         $this->confirmed = $args['confirmed'] ?? null;
         $this->token = $args['token'] ?? '';
     }
+
+    // Validation messages
+    public function validateNewAccount() {
+        if (!$this->name) {
+            self::$alerts['error'][] = 'You must write your name';
+        }
+        if (!$this->surname) {
+            self::$alerts['error'][] = 'You must write your surname';
+        }
+        if (!$this->phone) {
+            self::$alerts['error'][] = 'You must write your phone number';
+        }
+        if (!$this->email) {
+            self::$alerts['error'][] = 'You must write your email';
+        }
+        if (!$this->password || strlen($this->password) < 8) {
+            self::$alerts['error'][] = 'Enter a strong password with at least 6 characters';
+        }
+        return self::$alerts;
+    }
+
+    public function userExists() {
+        $query = "SELECT * FROM " . self::$table;
+        $query .= " WHERE email = '";
+        $query .= $this->email . "' LIMIT 1";
+        debug($query);
+    }
 }

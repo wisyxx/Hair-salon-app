@@ -72,7 +72,7 @@ class ActiveRecord {
     }
 
     // Sync BD with objects in memory
-    public function sincronizar($args=[]) { 
+    public function sync($args=[]) { 
         foreach($args as $key => $value) {
           if(property_exists($this, $key) && !is_null($value)) {
             $this->$key = $value;
