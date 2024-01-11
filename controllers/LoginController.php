@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\Email;
 use Model\User;
 use MVC\Router;
 
@@ -10,7 +11,6 @@ class LoginController
     public static function login(Router $router)
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
         }
 
         $router->render('auth/login', []);
@@ -24,8 +24,9 @@ class LoginController
         header('Location: /');
     }
 
-    public static function register(Router $router) {
-        
+    public static function register(Router $router)
+    {
+
         $user = new User($_POST);
         $alerts = [];
 
@@ -34,9 +35,26 @@ class LoginController
             $alerts = $user->validateNewAccount();
 
             if (empty($alerts)) {
-                $user->userExists();   
+                $result = $user->userExists();
+
+                if ($result->num_rows) {
+                    $alerts = User::getAlerts();
+                } else {
+                    $user->hashPassword();
+                    $user->createToken();
+
+                    // Send confirmation email
+                    $email = new Email(
+                        $user->email,
+                        $user->name,
+                        $user->token
+                    );
+
+                    $email->sendConfirmation();
+                }
             }
         }
+
         $router->render('auth/create-account', [
             'user' => $user,
             'alerts' => $alerts

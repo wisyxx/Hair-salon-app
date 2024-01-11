@@ -60,6 +60,21 @@ class User extends ActiveRecord
         $query = "SELECT * FROM " . self::$table;
         $query .= " WHERE email = '";
         $query .= $this->email . "' LIMIT 1";
-        debug($query);
+        
+        $result = self::$db->query($query);
+
+        if ($result->num_rows) {
+            self::$alerts['error'][] = 'User already exists';
+        }
+
+        return $result;
+    }
+
+    public function hashPassword() {
+        $this->password = password_hash($this->password, PASSWORD_BCRYPT);
+    }
+
+    public function createToken() {
+        $this->token = uniqid();
     }
 }

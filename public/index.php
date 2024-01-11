@@ -23,6 +23,7 @@ $router->post('/recover', [LoginController::class, 'recover']);
 /* REGISTER */
 $router->get('/create-account', [LoginController::class, 'register']);
 $router->post('/create-account', [LoginController::class, 'register']);
+$router->get('verify-account', [LoginController::class, 'verify']);
 
 // Checks if the routes are valid and assings functions in the controller
 $router->checkRoutes();
