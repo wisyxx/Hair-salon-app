@@ -26,7 +26,6 @@ class LoginController
 
     public static function register(Router $router)
     {
-
         $user = new User($_POST);
         $alerts = [];
 
@@ -41,16 +40,21 @@ class LoginController
                     $alerts = User::getAlerts();
                 } else {
                     $user->hashPassword();
-                    $user->createToken();
 
-                    // Send confirmation email
+                    /* Account verifing process */
+                    $user->createToken();
                     $email = new Email(
                         $user->email,
                         $user->name,
                         $user->token
                     );
-
                     $email->sendConfirmation();
+
+                    // Create user
+                    $result = $user->save();
+                    if ($result) {
+                        header('Location: /message');
+                    }
                 }
             }
         }
@@ -61,8 +65,35 @@ class LoginController
         ]);
     }
 
+    public static function verify(Router $router) {
+        $alerts = [];
+
+        $token = s($_GET['token']);
+
+        $user = User::where('token', $token);
+
+        if (empty($user)) {
+            User::setAlert('error', 'It seems that the token isn\'t valid');
+        } else {
+            $user->confirmed = 1;
+            $user->token = null;
+            
+            $user->save();
+            User::setAlert('succeed', 'Account verified!');
+        }
+
+        $alerts = User::getAlerts();
+        $router->render('auth/verify-account', [
+            'alerts' => $alerts
+        ]);
+    }
+
     public static function forgotPassword(Router $router)
     {
         $router->render('auth/forgot-password', []);
+    }
+
+    public static function message(Router $router) {
+        $router->render('auth/message', []);
     }
 }

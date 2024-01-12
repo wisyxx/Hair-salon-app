@@ -1,13 +1,20 @@
 @use '../base/variables' as v;
 
-.alert {
-    text-align: center;
-    padding: .8rem;
-    margin: 1rem 0;
-    background-color: v.$red;
-    font-weight: bolder;
+.error,
+.succeed {
+  text-align: center;
+  padding: 0.8rem;
+  margin: 1rem 0;
+  font-weight: bolder;
 
-    &:last-of-type {
-        margin-bottom: 2rem;
-    }
+  &:last-of-type {
+    margin-bottom: 2rem;
+  }
+}
+
+.error {
+  background-color: v.$red;
+}
+.succeed {
+  background-color: v.$green;
 }

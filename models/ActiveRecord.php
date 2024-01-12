@@ -6,7 +6,7 @@ class ActiveRecord {
     // DB
     protected static $db;
     protected static $table = '';
-    protected static $columnsDB = [];
+    protected static $DBColumns = [];
 
     protected static $alerts = [];
     
@@ -55,7 +55,7 @@ class ActiveRecord {
 
     public function atributes() {
         $atributes = [];
-        foreach(static::$columnsDB as $column) {
+        foreach(static::$DBColumns as $column) {
             if($column === 'id') continue;
             $atributes[$column] = $this->$column;
         }
@@ -110,16 +110,23 @@ class ActiveRecord {
         return array_shift( $result ) ;
     }
 
+    public static function where($column, $value)
+    {
+        $query = "SELECT * FROM " . static::$table  . " WHERE $column = '$value'";
+        $result = self::queryDB($query);
+        return array_shift($result);
+    }
+
     // crea un nuevo registro
     public function create() {
         $atributes = $this->sanitizeAtributes();
 
         $query = " INSERT INTO " . static::$table . " ( ";
         $query .= join(', ', array_keys($atributes));
-        $query .= " ) VALUES (' "; 
+        $query .= " ) VALUES ('"; 
         $query .= join("', '", array_values($atributes));
-        $query .= " ') ";
-
+        $query .= "') ";
+        
         $result = self::$db->query($query);
         return [
            'result' =>  $result,

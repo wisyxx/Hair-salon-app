@@ -31,8 +31,8 @@ class User extends ActiveRecord
         $this->email = $args['email'] ?? '';
         $this->phone = $args['phone'] ?? '';
         $this->password = $args['password'] ?? '';
-        $this->admin = $args['admin'] ?? null;
-        $this->confirmed = $args['confirmed'] ?? null;
+        $this->admin = $args['admin'] ?? 0;
+        $this->confirmed = $args['confirmed'] ?? 0;
         $this->token = $args['token'] ?? '';
     }
 
