@@ -55,6 +55,25 @@ class User extends ActiveRecord
         }
         return self::$alerts;
     }
+    
+    public function validateLogin() {
+        if (!$this->email) {
+            self::$alerts['error'][] = 'You must write your email';
+        }
+        if (!$this->password) {
+            self::$alerts['error'][] = 'You must write your password';
+        }
+
+        return self::$alerts;
+    }
+
+    public function validateEmail() {
+        if (!$this->email) {
+            self::$alerts['error'][] = 'You must write your email';
+        }
+
+        return self::$alerts;
+    }
 
     public function userExists() {
         $query = "SELECT * FROM " . self::$table;
@@ -76,5 +95,18 @@ class User extends ActiveRecord
 
     public function createToken() {
         $this->token = uniqid();
+    }
+
+
+    public function checkPasswordAndVerificated($password) {
+        $result = password_verify($password, $this->password);
+
+        if (!$result || !$this->confirmed) {
+            self::$alerts['error'][] = 'Incorrect password or account not verified';
+        } else {
+            return true;
+        }
+
+        return $result;
     }
 }

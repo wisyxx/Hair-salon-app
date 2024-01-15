@@ -10,18 +10,44 @@ class LoginController
 {
     public static function login(Router $router)
     {
+        $alerts = [];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $auth = new User($_POST);
+
+            $alerts = $auth->validateLogin();
+
+            if (empty($alerts)) {
+                $user = User::where('email', $auth->email);
+
+                if ($user) {
+                    if ($user->checkPasswordAndVerificated($auth->password)) {
+                        session_start();
+
+                        $_SESSION['id'] = $user->id;
+                        $_SESSION['name'] = $user->name . ' ' . $user->surname;
+                        $_SESSION['email'] = $user->email;
+
+                        if ($user->admin === "1") {
+                            $_SESSION['admin'] = $user->admin ?? null;
+                            header('Location: /admin-panel');
+                        } else {
+                            header('Location: /cita');
+                        }
+
+                        debug($_SESSION);
+                    }
+                } else {
+                    User::setAlert('error', 'User doesn\'t exist');
+                }
+            }
         }
 
-        $router->render('auth/login', []);
-    }
-    public static function logout()
-    {
-        session_start();
+        $alerts = User::getAlerts();
 
-        $_SESSION = [];
-
-        header('Location: /');
+        $router->render('auth/login', [
+            'alerts' => $alerts
+        ]);
     }
 
     public static function register(Router $router)
@@ -90,7 +116,39 @@ class LoginController
 
     public static function forgotPassword(Router $router)
     {
-        $router->render('auth/forgot-password', []);
+
+        $alerts = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $auth = new User($_POST);
+            $alerts = $auth->validateEmail();
+
+            if (empty($alerts)) {
+                $user = User::where('email', $auth->email);
+
+                if ($user) {
+                    $user->createToken();
+                    $user->save();
+
+                    $email = new Email($user->email, $user->name, $user->token);
+                    $email->sendInstructions();
+
+                    User::setAlert('succeed', 'Check your inbox!');
+                } else {
+                    $alerts = User::setAlert('error', 'The user doesn\'t exist or it isn\'t confirmed');
+                }
+            }
+        }
+
+        $alerts = User::getAlerts();
+        
+        $router->render('auth/forgot-password', [
+            'alerts' => $alerts
+        ]);
+    }
+
+    public static function reset(Router $router) {
+        $router->render('auth/reset', []);
     }
 
     public static function message(Router $router) {

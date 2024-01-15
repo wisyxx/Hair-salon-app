@@ -29,6 +29,6 @@
 </form>
 
 <div class="actions">
-    <a href="/">Already have an account, log in</a>
+    <a href="/">Already have an account?, log in</a>
     <a href="/forgot-password">Forgot my password</a>
 </div>

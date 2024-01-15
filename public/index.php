@@ -17,8 +17,8 @@ $router->get('/logout', [LoginController::class, 'logout']);
 /* ACCOUNT RECOVERY */
 $router->get('/forgot-password', [LoginController::class, 'forgotPassword']);
 $router->post('/forgot-password', [LoginController::class, 'forgotPassword']);
-$router->get('/recover', [LoginController::class, 'recover']);
-$router->post('/recover', [LoginController::class, 'recover']);
+$router->get('/reset', [LoginController::class, 'reset']);
+$router->post('/reset', [LoginController::class, 'reset']);
 
 /* REGISTER */
 $router->get('/create-account', [LoginController::class, 'register']);

@@ -21,8 +21,6 @@ class Router
     {
         
         // Protect routes
-        session_start();
-        
         $protectedRoutes = [];
 
         $auth = $_SESSION['login'] ?? null;

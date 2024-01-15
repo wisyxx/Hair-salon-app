@@ -1,6 +1,10 @@
 <h1 class="page-name">Login</h1>
 <p class="page-description">Login with your credentials</p>
 
+<?php
+    include __DIR__ . '/../templates/alerts.php';
+?>
+
 <form class="form" method="POST" action="/">
     <div class="field">
         <label for="email">Email</label>
