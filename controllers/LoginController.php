@@ -32,7 +32,7 @@ class LoginController
                             $_SESSION['admin'] = $user->admin ?? null;
                             header('Location: /admin-panel');
                         } else {
-                            header('Location: /cita');
+                            header('Location: /apointments');
                         }
 
                         debug($_SESSION);
@@ -91,7 +91,8 @@ class LoginController
         ]);
     }
 
-    public static function verify(Router $router) {
+    public static function verify(Router $router)
+    {
         $alerts = [];
 
         $token = s($_GET['token']);
@@ -103,7 +104,7 @@ class LoginController
         } else {
             $user->confirmed = 1;
             $user->token = null;
-            
+
             $user->save();
             User::setAlert('succeed', 'Account verified!');
         }
@@ -116,7 +117,6 @@ class LoginController
 
     public static function forgotPassword(Router $router)
     {
-
         $alerts = [];
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -141,17 +141,54 @@ class LoginController
         }
 
         $alerts = User::getAlerts();
-        
+
         $router->render('auth/forgot-password', [
             'alerts' => $alerts
         ]);
     }
 
-    public static function reset(Router $router) {
-        $router->render('auth/reset', []);
+    public static function reset(Router $router)
+    {
+        $alerts = [];
+        $error = false;
+        $token = s($_GET['token']);
+
+        $user = User::where('token', $token);
+
+        if (empty($user)) {
+            User::setAlert('error', 'Invalid token');
+            $error = true;
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $password = new User($_POST);
+            $alerts = $password->validatePassword();
+
+            if (empty($alerts)) {
+                $user->password = null;
+                $user->password = $password->password;
+
+                $user->hashPassword();
+                $user->token = null;
+                
+                $result = $user->save();
+
+                if ($result) {
+                    header('Location: /');
+                }
+            }
+        }
+
+        $alerts = User::getAlerts();
+
+        $router->render('auth/reset', [
+            'alerts' => $alerts,
+            'error' => $error
+        ]);
     }
 
-    public static function message(Router $router) {
+    public static function message(Router $router)
+    {
         $router->render('auth/message', []);
     }
 }

@@ -37,7 +37,8 @@ class User extends ActiveRecord
     }
 
     // Validation messages
-    public function validateNewAccount() {
+    public function validateNewAccount()
+    {
         if (!$this->name) {
             self::$alerts['error'][] = 'You must write your name';
         }
@@ -55,8 +56,9 @@ class User extends ActiveRecord
         }
         return self::$alerts;
     }
-    
-    public function validateLogin() {
+
+    public function validateLogin()
+    {
         if (!$this->email) {
             self::$alerts['error'][] = 'You must write your email';
         }
@@ -67,7 +69,8 @@ class User extends ActiveRecord
         return self::$alerts;
     }
 
-    public function validateEmail() {
+    public function validateEmail()
+    {
         if (!$this->email) {
             self::$alerts['error'][] = 'You must write your email';
         }
@@ -75,11 +78,24 @@ class User extends ActiveRecord
         return self::$alerts;
     }
 
-    public function userExists() {
+    public function validatePassword()
+    {
+        if (!$this->password) {
+            self::$alerts['error'][] = 'You must write a password';
+        }
+        if (strlen($this->password) < 8) {
+            self::$alerts['error'][] = 'Your password must have at least 8 characters';
+        }
+
+        return self::$alerts;
+    }
+
+    public function userExists()
+    {
         $query = "SELECT * FROM " . self::$table;
         $query .= " WHERE email = '";
         $query .= $this->email . "' LIMIT 1";
-        
+
         $result = self::$db->query($query);
 
         if ($result->num_rows) {
@@ -89,16 +105,19 @@ class User extends ActiveRecord
         return $result;
     }
 
-    public function hashPassword() {
+    public function hashPassword()
+    {
         $this->password = password_hash($this->password, PASSWORD_BCRYPT);
     }
 
-    public function createToken() {
+    public function createToken()
+    {
         $this->token = uniqid();
     }
 
 
-    public function checkPasswordAndVerificated($password) {
+    public function checkPasswordAndVerificated($password)
+    {
         $result = password_verify($password, $this->password);
 
         if (!$result || !$this->confirmed) {
