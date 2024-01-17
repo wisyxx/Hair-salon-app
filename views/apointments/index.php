@@ -38,11 +38,17 @@
     </div>
 
     <div class="pagination">
-        <button class="button" id="last">
-            &laquo; Last
+        <button class="button" id="previous">
+            &laquo; Previous
         </button>
-        <button class="button" id="last">
+        <button class="button" id="next">
             Next &raquo;
         </button>
     </div>
 </div>
+
+<?php
+$script = "
+        <script src='build/js/app.js'></script>
+    ";
+?>

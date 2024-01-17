@@ -23,7 +23,7 @@
       background-color: darken(v.$blue, 20%);
       transition: all 150ms;
     }
-    &.actual {
+    &.current {
         background-color: v.$white;
         color: v.$blue;
     }

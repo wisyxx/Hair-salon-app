@@ -3,9 +3,13 @@
   .text-center {
     text-align: center;
   }
+  display: none;
+}
 
-  &:nth-child(3),
-  &:nth-child(4) {
-    display: none;
-  }
+.show {
+  display: block;
+}
+
+.hide {
+  display: none;
 }
