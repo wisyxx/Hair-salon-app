@@ -1,7 +1,7 @@
 @use 'variables' as v;
 
 /* Media Queries */
-@mixin movile {
+@mixin phone {
     @media (min-width: v.$movile) {
         @content;
     }
