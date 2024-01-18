@@ -2,6 +2,13 @@ let step = 1;
 const initialStep = 1;
 const lastStep = 3;
 
+const apointment = {
+  name: '',
+  date: '',
+  hour: '',
+  services: [],
+};
+
 document.addEventListener('DOMContentLoaded', () => {
   startApp();
 });
@@ -109,8 +116,8 @@ async function queryAPI() {
 }
 
 function showServices(services) {
-  services.forEach(service => {
-    const {id, name, price} = service;
+  services.forEach((service) => {
+    const { id, name, price } = service;
 
     const serviceName = document.createElement('P');
     serviceName.classList.add('service-name');
@@ -123,10 +130,28 @@ function showServices(services) {
     const serviceDiv = document.createElement('DIV');
     serviceDiv.classList.add('service');
     serviceDiv.dataset.serviceId = id;
+    serviceDiv.onclick = function () {
+      selectService(service);
+    };
 
     serviceDiv.appendChild(serviceName);
     serviceDiv.appendChild(servicePrice);
 
     document.querySelector('#services').appendChild(serviceDiv);
-  })
+  });
+}
+
+function selectService(service) {
+  const { id } = service;
+  const { services } = apointment;
+
+  const serviceDiv = document.querySelector(`[data-service-id="${id}"]`);
+
+  if (services.some((selected) => selected.id === service.id)) {
+    apointment.services = services.filter((selected) => selected.id !== id);
+    serviceDiv.classList.remove('selected');
+  } else {
+    apointment.services = [...services, service]; // Same as apointment.services.push(service)
+    serviceDiv.classList.add('selected');
+  }
 }

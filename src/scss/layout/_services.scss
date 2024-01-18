@@ -16,9 +16,21 @@
     transition: all 300ms;
     text-align: center;
 
+    &.selected {
+      background-color: v.$blue;
+      p {
+        color: v.$white;
+      }
+      &:hover {
+        transform: scale(1.05);
+        box-shadow: transparentize(v.$white, 0.6) 0px 30px 60px -12px inset,
+          transparentize(v.$white, 0.65) 0px 18px 36px -18px inset;
+      }
+    }
+
     &:hover {
       transform: scale(1.05);
-      box-shadow: transparentize(v.$blue, 0.60) 0px 30px 60px -12px inset,
+      box-shadow: transparentize(v.$blue, 0.6) 0px 30px 60px -12px inset,
         transparentize(v.$blue, 0.65) 0px 18px 36px -18px inset;
     }
 
