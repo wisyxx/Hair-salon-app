@@ -12,6 +12,8 @@ function startApp() {
   tabs(); // Change section when pressing on one of the tabs
   previousSection();
   nextSection();
+
+  queryAPI();
 }
 
 function showSection() {
@@ -93,4 +95,38 @@ function nextSection() {
     paginationButtons();
     showSection();
   });
+}
+
+async function queryAPI() {
+  try {
+    const url = 'http://localhost:3000/api/services';
+    const result = await fetch(url);
+    const services = await result.json();
+    showServices(services);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+function showServices(services) {
+  services.forEach(service => {
+    const {id, name, price} = service;
+
+    const serviceName = document.createElement('P');
+    serviceName.classList.add('service-name');
+    serviceName.textContent = name;
+
+    const servicePrice = document.createElement('P');
+    servicePrice.classList.add('service-price');
+    servicePrice.textContent = `${price}€`;
+
+    const serviceDiv = document.createElement('DIV');
+    serviceDiv.classList.add('service');
+    serviceDiv.dataset.serviceId = id;
+
+    serviceDiv.appendChild(serviceName);
+    serviceDiv.appendChild(servicePrice);
+
+    document.querySelector('#services').appendChild(serviceDiv);
+  })
 }

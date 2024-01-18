@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\APIController;
 use Controllers\ApointmentsController;
 use Controllers\LoginController;
 use MVC\Router;
@@ -29,6 +30,9 @@ $router->get('/message', [LoginController::class, 'message']);
 
 /*===> APOINTMENTS <===*/
 $router->get('/apointments', [ApointmentsController::class, 'index']);
+
+/*===> APOINTMENTS API <===*/
+$router->get('/api/services', [APIController::class, 'index']);
 
 // Checks if the routes are valid and assings functions in the controller
 $router->checkRoutes();
