@@ -12,7 +12,7 @@
     <div class="section" id="step-1">
         <h2>Services</h2>
         <p class="text-center">Choose your services below</p>
-        <div id="services"></div>
+        <div id="services" class="services-list"></div>
     </div>
     <div class="section" id="step-2">
         <h2>Your personal data and apointment</h2>
