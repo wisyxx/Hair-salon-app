@@ -21,6 +21,8 @@ function startApp() {
   nextSection();
 
   queryAPI();
+  clientName(); // Sets the client name to the apointment obj
+  apointmentDate(); // Sets the apointment date to the apointment obj
 }
 
 function showSection() {
@@ -154,4 +156,39 @@ function selectService(service) {
     apointment.services = [...services, service]; // Same as apointment.services.push(service)
     serviceDiv.classList.add('selected');
   }
+}
+
+function clientName() {
+  apointment.name = document.querySelector('#name').value;
+}
+function apointmentDate() {
+  const dateInput = document.querySelector('#date');
+
+  dateInput.addEventListener('input', (e) => {
+    const day = new Date(e.target.value).getUTCDay();
+
+    if ([0].includes(day)) {
+      e.target.value = '';
+      showAlert("You can't select Sundays", 'error');
+    } else {
+      apointment.date = e.target.value;
+    }
+  });
+}
+
+function showAlert(message, alertType) {
+  const previousAlert = document.querySelector('.error');
+  if (previousAlert) return;
+
+  const alert = document.createElement('DIV');
+  const form = document.querySelector('.form');
+
+  alert.textContent = message;
+  alert.classList.add(alertType);
+  form.appendChild(alert);
+  console.log(form);
+
+  setTimeout(() => {
+    alert.remove();
+  }, 3000);
 }
