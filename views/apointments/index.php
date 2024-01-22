@@ -25,7 +25,7 @@
             </div>
             <div class="field">
                 <label for="date">Apointment date</label>
-                <input type="date" name="date" id="date">
+                <input type="date" name="date" id="date" min="<?php echo date('Y-m-d'); ?>">
             </div>
             <div class="field">
                 <label for="hour">Apointment hour</label>

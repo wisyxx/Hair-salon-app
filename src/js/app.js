@@ -23,6 +23,7 @@ function startApp() {
   queryAPI();
   clientName(); // Sets the client name to the apointment obj
   apointmentDate(); // Sets the apointment date to the apointment obj
+  apointmentHour(); // Sets the apointment hour to the apointment obj
 }
 
 function showSection() {
@@ -163,15 +164,28 @@ function clientName() {
 }
 function apointmentDate() {
   const dateInput = document.querySelector('#date');
-
+  
   dateInput.addEventListener('input', (e) => {
     const day = new Date(e.target.value).getUTCDay();
-
+    
     if ([0].includes(day)) {
       e.target.value = '';
       showAlert("You can't select Sundays", 'error');
     } else {
       apointment.date = e.target.value;
+    }
+  });
+}
+
+function apointmentHour() {
+  const hourInput = document.querySelector('#hour');
+
+  hourInput.addEventListener('input', (e) => {
+    const hour = e.target.value.split(':')[0];
+    if (hour < 10 || hour > 20) {
+      showAlert('The hour must be between 10:00 and 20:00', 'error');
+    } else {
+      apointment.hour = e.target.value;
     }
   });
 }
@@ -192,3 +206,4 @@ function showAlert(message, alertType) {
     alert.remove();
   }, 3000);
 }
+
