@@ -5,7 +5,7 @@
 
     <nav class="tabs">
         <button type="button" data-step="1">Services</button>
-        <button type="button" data-step="2">Personal data and apointment</button>
+        <button type="button" data-step="2">Personal data and apointment date</button>
         <button type="button" data-step="3">Apointment summary</button>
     </nav>
 
@@ -33,7 +33,7 @@
             </div>
         </form>
     </div>
-    <div class="section" id="step-3">
+    <div class="section summary-content" id="step-3">
         <h2>Apointment summary</h2>
         <p class="text-center">Verify your apointment information</p>
     </div>

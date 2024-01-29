@@ -24,6 +24,8 @@ function startApp() {
   clientName(); // Sets the client name to the apointment obj
   apointmentDate(); // Sets the apointment date to the apointment obj
   apointmentHour(); // Sets the apointment hour to the apointment obj
+
+  showSummary();
 }
 
 function showSection() {
@@ -74,6 +76,7 @@ function paginationButtons() {
     case 3:
       nextButton.classList.add('hide');
       previousButton.classList.remove('hide');
+      showSummary();
       break;
     default:
       nextButton.classList.remove('hide');
@@ -164,13 +167,13 @@ function clientName() {
 }
 function apointmentDate() {
   const dateInput = document.querySelector('#date');
-  
+
   dateInput.addEventListener('input', (e) => {
     const day = new Date(e.target.value).getUTCDay();
-    
+
     if ([0].includes(day)) {
       e.target.value = '';
-      showAlert("You can't select Sundays", 'error');
+      showAlert("You can't select Sundays", 'error', 'form');
     } else {
       apointment.date = e.target.value;
     }
@@ -183,27 +186,110 @@ function apointmentHour() {
   hourInput.addEventListener('input', (e) => {
     const hour = e.target.value.split(':')[0];
     if (hour < 10 || hour > 20) {
-      showAlert('The hour must be between 10:00 and 20:00', 'error');
+      showAlert('The hour must be between 10:00 and 20:00', 'error', 'form');
     } else {
       apointment.hour = e.target.value;
     }
   });
 }
 
-function showAlert(message, alertType) {
+function showAlert(message, alertType, page, disapears = true) {
   const previousAlert = document.querySelector('.error');
-  if (previousAlert) return;
+  if (previousAlert) previousAlert.remove();
 
   const alert = document.createElement('DIV');
-  const form = document.querySelector('.form');
+  const displayPage = document.querySelector(`.${page}`);
 
   alert.textContent = message;
   alert.classList.add(alertType);
-  form.appendChild(alert);
-  console.log(form);
+  displayPage.appendChild(alert);
 
-  setTimeout(() => {
-    alert.remove();
-  }, 3000);
+  if (disapears) {
+    setTimeout(() => {
+      alert.remove();
+    }, 3000);
+  }
 }
 
+function showSummary() {
+  const summary = document.querySelector('.summary-content');
+
+  // Clean the summary page
+  while (summary.firstChild) {
+    summary.removeChild(summary.firstChild);
+  }
+
+  if (
+    Object.values(apointment).includes('') ||
+    apointment.services.length === 0
+  ) {
+    showAlert(
+      'Some values are missing or no services have been selected, please review your apointment',
+      'error',
+      'summary-content',
+      false
+    );
+
+    return;
+  }
+
+  const { name, date, hour, services } = apointment;
+
+  // Show services
+  const servicesHeading = document.createElement('H3');
+  servicesHeading.textContent = 'Services summary';
+  summary.appendChild(servicesHeading);
+
+  services.forEach((service) => {
+    const { price, name } = service;
+
+    const serviceContainer = document.createElement('DIV');
+    serviceContainer.classList.add('service-container');
+
+    const serviceName = document.createElement('P');
+    serviceName.textContent = name;
+
+    const servicePrice = document.createElement('P');
+    servicePrice.innerHTML = `<span>Price: </span>$${price}`;
+
+    serviceContainer.append(serviceName, servicePrice);
+
+    summary.appendChild(serviceContainer);
+  });
+
+  // Format apointment data
+  const dateObj = new Date(date);
+  const month = dateObj.getMonth();
+  const day = dateObj.getDate() + 2;
+  const year = dateObj.getFullYear();
+  
+  const UTCDate = new Date( Date.UTC(year, month, day));
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const formatedDate = UTCDate.toLocaleDateString('en-US', options);
+
+  // Show apointment data
+  const apointmentDataHeading = document.createElement('H3');
+  apointmentDataHeading.textContent = 'Apointment summary';
+  summary.appendChild(apointmentDataHeading);
+
+  const clientName = document.createElement('P');
+  clientName.innerHTML = `<span>Name: </span>${name}`;
+
+  const apointmentDate = document.createElement('P');
+  apointmentDate.innerHTML = `<span>Date: </span>${formatedDate}`;
+
+  const apointmentHour = document.createElement('P');
+  apointmentHour.innerHTML = `<span>Hour: </span>${hour}`;
+
+  // Create apointment button
+  const bookingButton = document.createElement('BUTTON');
+  bookingButton.classList.add('button');
+  bookingButton.textContent = 'Book apointment';
+  bookingButton.onclick = bookApointment;
+
+  summary.append(clientName, apointmentDate, apointmentHour, bookingButton);
+}
+
+function bookApointment() {
+  
+}
