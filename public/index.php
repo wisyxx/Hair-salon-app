@@ -33,6 +33,7 @@ $router->get('/apointments', [ApointmentsController::class, 'index']);
 
 /*===> APOINTMENTS API <===*/
 $router->get('/api/services', [APIController::class, 'index']);
+$router->post('/api/apointments', [APIController::class, 'save']);
 
 // Checks if the routes are valid and assings functions in the controller
 $router->checkRoutes();

@@ -290,6 +290,24 @@ function showSummary() {
   summary.append(clientName, apointmentDate, apointmentHour, bookingButton);
 }
 
-function bookApointment() {
+async function bookApointment() {
+  const { name, date, hour, services } = apointment;
+  const data = new FormData();
+
+  const serviceId = services.map(service => service.id);
+
+  data.append('name', name);
+  data.append('date', date);
+  data.append('hour', hour);
+  data.append('services', serviceId);
   
+
+
+  url = 'http://localhost:3000/api/apointments';
+  const response = await fetch(url, {
+    method: 'POST',
+    body: data
+  });
+
+  const result = await response.json();
 }
