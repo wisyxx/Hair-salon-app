@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\Apointment;
 use Model\Service;
 
 class APIController
@@ -14,11 +15,18 @@ class APIController
         $services = Service::all();
         echo json_encode($services);
     }
+    
     public static function save()
     {
         header(self::$headerJSON);
+
+        $apointment = new Apointment($_POST);
+
+        $result = $apointment->save();
+
         $response = [
-            'data' => $_POST
+            'apointment' => $apointment,
+            'result' => $result
         ];
 
         echo json_encode($response);

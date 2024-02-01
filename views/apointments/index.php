@@ -31,6 +31,7 @@
                 <label for="hour">Apointment hour</label>
                 <input type="time" name="hour" id="hour">
             </div>
+            <input type="hidden" value="<?php echo $id ?>" id="id">
         </form>
     </div>
     <div class="section summary-content" id="step-3">
@@ -50,6 +51,7 @@
 
 <?php
 $script = "
+        <script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
         <script src='build/js/app.js'></script>
     ";
 ?>

@@ -3,6 +3,7 @@ const initialStep = 1;
 const lastStep = 3;
 
 const apointment = {
+  id: '',
   name: '',
   date: '',
   hour: '',
@@ -21,6 +22,7 @@ function startApp() {
   nextSection();
 
   queryAPI();
+  clientId(); // Sets the client id to the apointment obj
   clientName(); // Sets the client name to the apointment obj
   apointmentDate(); // Sets the apointment date to the apointment obj
   apointmentHour(); // Sets the apointment hour to the apointment obj
@@ -162,6 +164,9 @@ function selectService(service) {
   }
 }
 
+function clientId() {
+  apointment.id = document.querySelector('#id').value;
+}
 function clientName() {
   apointment.name = document.querySelector('#name').value;
 }
@@ -262,9 +267,14 @@ function showSummary() {
   const month = dateObj.getMonth();
   const day = dateObj.getDate() + 2;
   const year = dateObj.getFullYear();
-  
-  const UTCDate = new Date( Date.UTC(year, month, day));
-  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+  const UTCDate = new Date(Date.UTC(year, month, day));
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  };
   const formatedDate = UTCDate.toLocaleDateString('en-US', options);
 
   // Show apointment data
@@ -291,23 +301,42 @@ function showSummary() {
 }
 
 async function bookApointment() {
-  const { name, date, hour, services } = apointment;
+  const { id, name, date, hour, services } = apointment;
   const data = new FormData();
 
-  const serviceId = services.map(service => service.id);
+  const serviceId = services.map((service) => service.id);
 
+  data.append('userId', id);
   data.append('name', name);
   data.append('date', date);
   data.append('hour', hour);
   data.append('services', serviceId);
-  
 
+  try {
+    url = 'http://localhost:3000/api/apointments';
+    const response = await fetch(url, {
+      method: 'POST',
+      body: data,
+    });
 
-  url = 'http://localhost:3000/api/apointments';
-  const response = await fetch(url, {
-    method: 'POST',
-    body: data
-  });
+    const result = await response.json();
 
-  const result = await response.json();
+    if (result.result) {
+      Swal.fire({
+        icon: 'success',
+        title: 'Apointment created',
+        text: 'Your apointment has been registered',
+        button: 'Ok',
+      }).then(() => {
+        window.location.reload();
+      });
+    }
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Error',
+      text: 'An error ocurred while saving the apointment',
+      button: 'Ok',
+    });
+  }
 }
