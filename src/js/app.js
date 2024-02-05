@@ -302,6 +302,7 @@ function showSummary() {
 
 async function bookApointment() {
   const { id, name, date, hour, services } = apointment;
+
   const data = new FormData();
 
   const serviceId = services.map((service) => service.id);

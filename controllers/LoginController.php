@@ -27,6 +27,7 @@ class LoginController
                         $_SESSION['id'] = $user->id;
                         $_SESSION['name'] = $user->name . ' ' . $user->surname;
                         $_SESSION['email'] = $user->email;
+                        $_SESSION['login'] = true;
 
                         if ($user->admin === "1") {
                             $_SESSION['admin'] = $user->admin ?? null;
