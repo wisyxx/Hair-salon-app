@@ -192,4 +192,10 @@ class LoginController
     {
         $router->render('auth/message', []);
     }
+
+    public static function logout() {
+        session_start();
+        $_SESSION = [];
+        header('Location: /');
+    }
 }

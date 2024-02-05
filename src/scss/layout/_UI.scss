@@ -2,26 +2,42 @@
 @use '../base/mixins' as m;
 
 .app-container {
+  @include m.tablet {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    min-height: 100vh;
+  }
+
+  .img {
+    height: 20rem;
+    background-image: url('../img/1.jpg');
+    background-size: cover;
+    background-position: center center;
+
     @include m.tablet {
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        min-height: 100vh;
+      height: auto;
     }
-
-    .img {
-        height: 20rem;
-        background-image: url('../img/1.jpg');
-        background-size: cover;
-        background-position: center center;
-
-        @include m.tablet {
-            height: auto;
-        }
-    }
+  }
 }
 
 .app {
-    width: 95%;
-    margin: 0 auto;
-    padding: 3rem 0;
+  width: 95%;
+  margin: 0 auto;
+  padding: 3rem 0;
+}
+
+.bar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+
+  @include m.tablet {
+    flex-direction: row;
+  }
+
+  margin-top: 6rem;
+  .button {
+      @include m.button(v.$dark, v.$white);
+  }
 }

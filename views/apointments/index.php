@@ -1,8 +1,12 @@
 <h1 class="page-title">Your apointments</h1>
 <p class="page-description">Select your services and write your personal data</p>
 
-<div id="app">
+<div class="bar">
+    <p>Hello: <?php echo $_SESSION['name'] ?? ''?></p>
+    <a href="/logout" class="button">Log out</a>
+</div>
 
+<div id="app">
     <nav class="tabs">
         <button type="button" data-step="1">Services</button>
         <button type="button" data-step="2">Personal data and apointment date</button>

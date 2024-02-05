@@ -2,6 +2,7 @@
 
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\AdminController;
 use Controllers\APIController;
 use Controllers\ApointmentsController;
 use Controllers\LoginController;
@@ -34,6 +35,9 @@ $router->get('/apointments', [ApointmentsController::class, 'index']);
 /*===> APOINTMENTS API <===*/
 $router->get('/api/services', [APIController::class, 'index']);
 $router->post('/api/apointments', [APIController::class, 'save']);
+
+/*======> ADMIN PANEL <======*/
+$router->get('/admin-panel', [AdminController::class, 'index']);
 
 // Checks if the routes are valid and assings functions in the controller
 $router->checkRoutes();
