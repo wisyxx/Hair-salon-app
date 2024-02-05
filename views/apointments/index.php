@@ -1,10 +1,11 @@
 <h1 class="page-title">Your apointments</h1>
 <p class="page-description">Select your services and write your personal data</p>
 
-<div class="bar">
-    <p>Hello: <?php echo $_SESSION['name'] ?? ''?></p>
-    <a href="/logout" class="button">Log out</a>
-</div>
+<?php
+
+include_once __DIR__ . '/../templates/bar.php';
+
+?>
 
 <div id="app">
     <nav class="tabs">
