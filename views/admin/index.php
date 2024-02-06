@@ -20,10 +20,10 @@ include_once __DIR__ . '/../templates/bar.php';
     <ul class="apointments">
         <?php
         $apointmentId = '';
-        foreach ($apointments as $apointment) :
+        foreach ($apointments as $key => $apointment) :
         ?>
-            <?php if ($apointmentId !== $apointment->id) : ?>
-                <li class="apointment">
+                <?php if ($apointmentId !== $apointment->id) : ?>
+                    <li class="apointment">
                     <p>ID: <span><?php echo $apointment->id ?></span></p>
                     <p>Hour: <span><?php echo $apointment->hour ?></span></p>
                     <p>Client: <span><?php echo $apointment->client ?></span></p>
@@ -32,8 +32,8 @@ include_once __DIR__ . '/../templates/bar.php';
                     <h3>Services</h3>
                     <?php $apointmentId = $apointment->id ?>
                 <?php endif; ?>
-                <p><span><?php echo $apointment->service ?></span></p>
-                </li>
+                <p class="service"><?php echo $apointment->service ?></p>
             <?php endforeach; ?>
+            </li>
     </ul>
 </div>

@@ -1,0 +1,28 @@
+@use '../base/variables' as v;
+
+.apointments {
+  list-style: none;
+  padding: none;
+
+  li {
+    padding: 1rem;
+    border-top: 1px solid v.$white;
+  }
+  p {
+    font-weight: v.$bold;
+
+  }
+  span {
+    font-weight: v.$regular;
+    color: v.$blue;
+  }
+
+  .service {
+    font-weight: v.$regular;
+    color: v.$blue;
+    text-align: center;
+    background: v.$white;
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+}
