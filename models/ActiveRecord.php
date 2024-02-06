@@ -117,6 +117,13 @@ class ActiveRecord {
         return array_shift($result);
     }
 
+    // Plain SQL query, use when model methods aren't enought
+    public static function SQL($query)
+    {
+        $result = self::queryDB($query);
+        return $result;
+    }
+
     // crea un nuevo registro
     public function create() {
         $atributes = $this->sanitizeAtributes();
