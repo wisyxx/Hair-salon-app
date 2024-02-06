@@ -16,6 +16,10 @@ include_once __DIR__ . '/../templates/bar.php';
     </form>
 </div>
 
+<?php if (count($apointments) === 0) : ?>
+    <p class="error">No apointments for the selected date</p>
+<?php endif; ?>
+
 <div class="apointments-admin">
     <ul class="apointments">
         <?php
@@ -51,3 +55,5 @@ include_once __DIR__ . '/../templates/bar.php';
                 </li>
     </ul>
 </div>
+
+<?php $script = '<script src="build/js/search.js"></script>'; ?>
