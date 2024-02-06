@@ -11,7 +11,7 @@ include_once __DIR__ . '/../templates/bar.php';
     <form class="form">
         <div class="field">
             <label for="date">Date</label>
-            <input type="date" name="date" id="date">
+            <input type="date" name="date" id="date" value="<?php echo $date ?>">
         </div>
     </form>
 </div>

@@ -10,6 +10,8 @@ class AdminController {
     {
         session_start();
 
+        $date = date('Y-m-d');
+
         $query = "SELECT apointments.id, apointments.hour, CONCAT( users.name, ' ', users.surname) as client, ";
         $query .= " users.email, users.phone, services.name as service, services.price  ";
         $query .= " FROM apointments  ";
@@ -19,12 +21,13 @@ class AdminController {
         $query .= " ON apointmentsservices.apointmentId = apointments.id ";
         $query .= " LEFT OUTER JOIN services ";
         $query .= " ON services.id = apointmentsservices.serviceId ";
-        // $query .= " WHERE date =  '$date' ";
+        $query .= " WHERE date =  '$date' ";
 
         $apointments = AdminApointment::SQL($query);
         
         $router->render('admin/index', [
-            'apointments' => $apointments
+            'apointments' => $apointments,
+            'date' => $date
         ]);
     }
 }
