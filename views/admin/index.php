@@ -22,8 +22,11 @@ include_once __DIR__ . '/../templates/bar.php';
         $apointmentId = '';
         foreach ($apointments as $key => $apointment) :
         ?>
-                <?php if ($apointmentId !== $apointment->id) : ?>
-                    <li class="apointment">
+            <?php
+            if ($apointmentId !== $apointment->id) :
+                $total = 0;
+            ?>
+                <li class="apointment">
                     <p>ID: <span><?php echo $apointment->id ?></span></p>
                     <p>Hour: <span><?php echo $apointment->hour ?></span></p>
                     <p>Client: <span><?php echo $apointment->client ?></span></p>
@@ -31,9 +34,20 @@ include_once __DIR__ . '/../templates/bar.php';
                     <p>Phone: <span><?php echo $apointment->phone ?></span></p>
                     <h3>Services</h3>
                     <?php $apointmentId = $apointment->id ?>
-                <?php endif; ?>
+                <?php
+            endif;
+            $total += $apointment->price
+                ?>
                 <p class="service"><?php echo $apointment->service ?></p>
+                <?php
+                $actual = $apointment->id;
+                $next = $apointments[$key + 1]->id ?? 0;
+
+                if (isLast($actual, $next)) :
+                ?>
+                    <p class="total">Total: <?php echo $total ?>€</p>
+                <?php endif; ?>
             <?php endforeach; ?>
-            </li>
+                </li>
     </ul>
 </div>

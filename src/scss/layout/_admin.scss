@@ -10,7 +10,6 @@
   }
   p {
     font-weight: v.$bold;
-
   }
   span {
     font-weight: v.$regular;
@@ -24,5 +23,13 @@
     background: v.$white;
     border-radius: 1rem;
     padding: 1rem;
+  }
+
+  .total {
+    background: v.$gray;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    display: inline-block;
+    color: v.$dark;
   }
 }

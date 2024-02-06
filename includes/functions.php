@@ -1,5 +1,9 @@
 <?php
 
+function isLast(string $actual, string $next) : bool {
+    return $actual !== $next;
+}
+
 function debug($var) : string {
     echo "<pre>";
     var_dump($var);
