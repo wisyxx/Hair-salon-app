@@ -114,7 +114,7 @@ function nextSection() {
 
 async function queryAPI() {
   try {
-    const url = 'http://localhost:3000/api/services';
+    const url = `${location.origin}/api/services`;
     const result = await fetch(url);
     const services = await result.json();
     showServices(services);
@@ -314,7 +314,7 @@ async function bookApointment() {
   data.append('services', serviceId);
 
   try {
-    url = 'http://localhost:3000/api/apointments';
+    url = `${location.origin}/api/apointments`;
     const response = await fetch(url, {
       method: 'POST',
       body: data,

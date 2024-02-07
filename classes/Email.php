@@ -22,11 +22,11 @@ class Email
     {
         $mail = new PHPMailer();
         $mail->isSMTP();
-        $mail->Host = 'sandbox.smtp.mailtrap.io';
+        $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
-        $mail->Port = 2525;
-        $mail->Username = '35ba6cecf041f5';
-        $mail->Password = 'e592a46b44fab9';
+        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Username = $_ENV['EMAIL_USER'];
+        $mail->Password = $_ENV['EMAIL_PASS'];
 
         $mail->setFrom('accounts@apphairsalon.no');
         $mail->addAddress('accounts@apphairsalon.no', 'apphairsalon.no');
@@ -42,7 +42,7 @@ class Email
                         to finish this process you need to verify your 
                         account by pressing the following link.
                     </p>';
-        $content .= '<a target="_self" href="localhost:3000/verify-account?token=' . $this->token . '">Verify here</a>';
+        $content .= '<a target="_self" href="' . $_ENV['APP_DOMAIN'] . '/verify-account?token=' . $this->token . '">Verify here</a>';
         $content .= '<p>
                         If it wasn\'t you, just ignore the message
                     </p>';
@@ -55,11 +55,11 @@ class Email
     public function sendInstructions() {
         $mail = new PHPMailer();
         $mail->isSMTP();
-        $mail->Host = 'sandbox.smtp.mailtrap.io';
+        $mail->Host = $_ENV['EMAIL_HOST'];
         $mail->SMTPAuth = true;
-        $mail->Port = 2525;
-        $mail->Username = '35ba6cecf041f5';
-        $mail->Password = 'e592a46b44fab9';
+        $mail->Port = $_ENV['EMAIL_PORT'];
+        $mail->Username = $_ENV['EMAIL_USER'];
+        $mail->Password = $_ENV['EMAIL_PASS'];
 
         $mail->setFrom('accounts@apphairsalon.no');
         $mail->addAddress('accounts@apphairsalon.no', 'apphairsalon.no');
@@ -75,7 +75,7 @@ class Email
                         press the following link to finish this 
                         process.
                     </p>';
-        $content .= '<a target="_self" href="localhost:3000/reset?token=' . $this->token . '">Reset password</a>';
+        $content .= '<a target="_self" href="' . $_ENV['APP_DOMAIN'] . '/reset?token=' . $this->token . '">Reset password</a>';
         $content .= '<p>
                         If it wasn\'t you, just ignore the message
                     </p>';
