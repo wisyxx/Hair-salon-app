@@ -4,3 +4,11 @@
 <?php
 include_once __DIR__ . '/../templates/bar.php';
 ?>
+
+<form method="POST" class="form">
+
+<?php
+    include_once __DIR__ . '/form.php';
+?>
+<input class="button" type="submit" value="Update">
+</form>
