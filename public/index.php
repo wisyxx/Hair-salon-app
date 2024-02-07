@@ -6,6 +6,7 @@ use Controllers\AdminController;
 use Controllers\APIController;
 use Controllers\ApointmentsController;
 use Controllers\LoginController;
+use Controllers\ServiceController;
 use MVC\Router;
 
 $router = new Router();
@@ -39,8 +40,12 @@ $router->post('/api/delete', [APIController::class, 'delete']);
 
 /*======> ADMIN PANEL <======*/
 $router->get('/admin-panel', [AdminController::class, 'index']);
-$router->get('/services', [AdminController::class, 'index']);
-$router->get('/services/create', [AdminController::class, 'index']);
+$router->get('/services', [ServiceController::class, 'index']);
+$router->get('/services/create', [ServiceController::class, 'create']);
+$router->post('/services/create', [ServiceController::class, 'create']);
+$router->get('/services/update', [ServiceController::class, 'update']);
+$router->post('/services/update', [ServiceController::class, 'update']);
+$router->post('/services/delete', [ServiceController::class, 'delete']);
 
 // Checks if the routes are valid and assings functions in the controller
 $router->checkRoutes();
