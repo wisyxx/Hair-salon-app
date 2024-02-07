@@ -17,4 +17,16 @@ class Service extends ActiveRecord
         $this->name = $args['name'] ?? '';
         $this->price = $args['price'] ?? '';
     }
+
+    public function validate()
+    {
+        if (!$this->name) {
+            self::$alerts['error'][] = 'You must write a name for the service';
+        }
+        if (!is_numeric($this->price)) {
+            self::$alerts['error'][] = 'You must set a price for the service';
+        }
+
+        return self::$alerts;
+    }
 }

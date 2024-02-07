@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Model\Service;
 use MVC\Router;
 
 class ServiceController
@@ -16,12 +17,25 @@ class ServiceController
     {
         session_start();
 
+        $service = new Service;
+        $alerts = [];
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST')
         {
+            $service->sync($_POST);
 
+            $alerts = $service->validate();
+
+            if (empty($alerts)) {
+                $service->save();
+                header('Location: /services');
+            }
         }
 
-        $router->render('services/create', []);
+        $router->render('services/create', [
+            'service' => $service,
+            'alerts' => $alerts
+        ]);
     }
     public static function update(Router $router)
     {
