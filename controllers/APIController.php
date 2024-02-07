@@ -16,7 +16,7 @@ class APIController
         $services = Service::all();
         echo json_encode($services);
     }
-    
+
     public static function save()
     {
         header(self::$headerJSON);
@@ -43,5 +43,15 @@ class APIController
         ];
 
         echo json_encode($response);
+    }
+    public static function delete()
+    {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            $id = $_POST['id'];
+
+            $apointment = Apointment::find($id);
+            $apointment->delete();
+            header('Location: ' . $_SERVER['HTTP_REFERER']);
+        }
     }
 }

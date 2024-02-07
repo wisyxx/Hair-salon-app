@@ -50,6 +50,11 @@ include_once __DIR__ . '/../templates/bar.php';
                 if (isLast($actual, $next)) :
                 ?>
                     <p class="total">Total: <?php echo $total ?>€</p>
+
+                    <form action="/api/delete" method="POST">
+                        <input type="hidden" name="id" value="<?php echo $apointment->id ?>">
+                        <input class="delete-button" type="submit" value="Delete">
+                    </form>
                 <?php endif; ?>
             <?php endforeach; ?>
                 </li>

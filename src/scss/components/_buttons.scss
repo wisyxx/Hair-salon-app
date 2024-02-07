@@ -4,3 +4,6 @@
 .button {
     @include m.button(v.$blue, v.$white);
 }
+.delete-button {
+    @include m.button(v.$red, v.$white);
+}

@@ -35,6 +35,7 @@ $router->get('/apointments', [ApointmentsController::class, 'index']);
 /*===> APOINTMENTS API <===*/
 $router->get('/api/services', [APIController::class, 'index']);
 $router->post('/api/apointments', [APIController::class, 'save']);
+$router->post('/api/delete', [APIController::class, 'delete']);
 
 /*======> ADMIN PANEL <======*/
 $router->get('/admin-panel', [AdminController::class, 'index']);
