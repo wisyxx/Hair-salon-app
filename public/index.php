@@ -39,6 +39,8 @@ $router->post('/api/delete', [APIController::class, 'delete']);
 
 /*======> ADMIN PANEL <======*/
 $router->get('/admin-panel', [AdminController::class, 'index']);
+$router->get('/services', [AdminController::class, 'index']);
+$router->get('/services/create', [AdminController::class, 'index']);
 
 // Checks if the routes are valid and assings functions in the controller
 $router->checkRoutes();

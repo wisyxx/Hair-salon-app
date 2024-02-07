@@ -40,6 +40,13 @@
 
   margin-top: 6rem;
   .button {
-      @include m.button(v.$dark, v.$white);
+    @include m.button(v.$dark, v.$white);
+  }
+}
+
+.services-bar {
+  margin-bottom: v.$spacing;
+  .button {
+    margin: 0 1rem 1rem 0;
   }
 }
