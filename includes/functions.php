@@ -1,10 +1,12 @@
 <?php
 
-function isLast(string $actual, string $next) : bool {
+function isLast(string $actual, string $next): bool
+{
     return $actual !== $next;
 }
 
-function debug($var) : string {
+function debug($var): string
+{
     echo "<pre>";
     var_dump($var);
     echo "</pre>";
@@ -12,13 +14,23 @@ function debug($var) : string {
 }
 
 // Sanitize HTML
-function s($html) : string {
+function s($html): string
+{
     $s = htmlspecialchars($html);
     return $s;
 }
 
-function isAuth() : void {
+function isAuth(): void
+{
     if (!isset($_SESSION['login'])) {
+        header('Location: /');
+    }
+}
+
+function isAdmin(): void
+{
+    if (!isset($_SESSION['admin']))
+    {
         header('Location: /');
     }
 }

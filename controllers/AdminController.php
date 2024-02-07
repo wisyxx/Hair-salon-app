@@ -11,6 +11,8 @@ class AdminController
     {
         session_start();
 
+        isAdmin();
+
         $date = $_GET['date'] ?? $date = date('Y-m-d');
         $dates = explode('-', $date);
 
