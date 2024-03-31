@@ -26,7 +26,7 @@ Clone the project
 Go to the project directory
 
 ```bash
-  cd EvoSport-Nutrition
+  cd Hair-Salon-App
 ```
 
 Install dev dependencies
