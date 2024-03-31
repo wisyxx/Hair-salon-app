@@ -120,7 +120,7 @@ class User extends ActiveRecord
     {
         $result = password_verify($password, $this->password);
 
-        if (!$result || !$this->confirmed) {
+        if (!$result || $this->confirmed === 1) {
             self::$alerts['error'][] = 'Incorrect password or account not verified';
         } else {
             return true;
